@@ -3,7 +3,7 @@
 import numpy as np
 import pandas as pd
 import netCDF4 as nc
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt #将pyplot简写为plt 改库可用于绘制图表
 import rasterio
 
 #%%
@@ -29,7 +29,7 @@ raw_temp_data[raw_temp_data == tmp_missing_value] = np.nan
 # %%
 
 #提取第一层数据
-small_data = raw_temp_data[0,:,:][::-1,:]#将图件上下颠倒
+small_data = raw_temp_data[0,:,:][::-1,:]#将图件上下颠倒(time, lat, lon)纬度颠倒,经度不变
 small_data.shape
 # %%
 
@@ -43,10 +43,10 @@ with rasterio.open(r"D:\data\dataset\\reasult\\test1901.tiff", 'w', driver='GTif
 
 #将nc文件转换为tiff文件的函数
 def array2tiff(matrix,filename):
-     with rasterio.open(filename, 'w', driver='GTiff',
-                       height=matrix.shape[0],#获得高
-                       width=matrix.shape[1],#获得长
-                       count=1,
-                       dtype=str(matrix.dtype)) as f:
-        f.write(matrix,1)
+     with rasterio.open(filename, 'w', driver='GTiff',#Geotiff格式文件
+                       height=matrix.shape[0],#获得高,取决于矩阵的行数
+                       width=matrix.shape[1],#获得长,取决于矩阵的列数
+                       count=1,#写入的波段数
+                       dtype=str(matrix.dtype)) as f:#指定数据类型为与矩阵相同类型
+        f.write(matrix,1)#将矩阵传递给文件,并写入第一个波段中
 array2tiff(raw_temp_data[2,:,:][::-1,:],r"D:\data\dataset\\reasult\\test1903.tiff")
