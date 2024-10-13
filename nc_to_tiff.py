@@ -33,7 +33,7 @@ small_data = raw_temp_data[0,:,:][::-1,:]#将图件上下颠倒(time, lat, lon)�
 small_data.shape
 # %%
 
-with rasterio.open(r"D:\data\dataset\\reasult\\test1901.tiff", 'w', driver='GTiff',
+with rasterio.open(r"D:\data\dataset\\result\\test1901.tiff", 'w', driver='GTiff',
                        height=small_data.shape[0],
                        width=small_data.shape[1],
                        count=1,
@@ -49,4 +49,4 @@ def array2tiff(matrix,filename):
                        count=1,#写入的波段数
                        dtype=str(matrix.dtype)) as f:#指定数据类型为与矩阵相同类型
         f.write(matrix,1)#将矩阵传递给文件,并写入第一个波段中
-array2tiff(raw_temp_data[2,:,:][::-1,:],r"D:\data\dataset\\reasult\\test1903.tiff")
+array2tiff(raw_temp_data[2,:,:][::-1,:],r"D:\data\dataset\\result\\test1903.tiff")
