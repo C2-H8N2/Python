@@ -17,7 +17,7 @@ from shapely.geometry import Point
 import platform
 # %%
 #加载nc文件
-nc_data=nc.Dataset(r"D:\data\lftx.sfc.2021.nc")
+nc_data=nc.Dataset(r"D:\data\dataset\lftx.sfc.2021.nc")
 
 # %%
 #处理nc数据
@@ -34,7 +34,7 @@ lon_data = np.array(nc_data.variables['lon'])
 lat_data = np.array(nc_data.variables['lat'])
 # %%
 #读取json数据
-chinamap_data = gpd.read_file(filename=r"D:\BaiduNetdiskDownload\climate data\100000_中华人民共和国_full.json")
+chinamap_data = gpd.read_file(filename=r"D:\data\dataset\100000_中华人民共和国_full.json")
 chinamap_data.head()
 # %%
 
