@@ -1,4 +1,5 @@
-#%%
+##导入包
+#%% md
 #导入包
 # 基础的数据处理工具
 import numpy as np
@@ -40,6 +41,7 @@ elif platform.system() == 'Windows':
     plt.rcParams["font.family"] = 'SimHei'
 else:
     pass
+##加载数据并提取
 # %%
 #加载数据
 nc_data = nc.Dataset(r"D:\data\dataset\climate data\cru_ts4.05.1901.2020.tmp.dat.nc")
@@ -56,8 +58,8 @@ raw_tmp_data
 tmp_missing_value = nc_data.variables['tmp'].missing_value
 raw_tmp_data[raw_tmp_data==tmp_missing_value] = np.nan 
 
+##处理时间
 # %%
-#处理时间
 
 def cftime2datetime(cftime,units,format='%Y-%m-%d %H:%M:%S'):
     #将nc文件时间格式从cftime转换为date
@@ -65,6 +67,8 @@ def cftime2datetime(cftime,units,format='%Y-%m-%d %H:%M:%S'):
 
 clean_time_data = pd.Series([cftime2datetime(i, units='days since 1900-1-1') for i in raw_time_data])
 clean_time_data[:4]
+
+##处理边界数据并改变坐标系
 # %%
 #导入中国边界数据
 china_boundary = gpd.read_file(filename="D:\data\dataset\中国地图边界202111版.json")
@@ -87,6 +91,7 @@ new_crs = ccrs.LambertConformal(central_longitude=center_china_point.x,
                                 central_latitude=center_china_point.y
                                 )
 
+##裁剪
 # %%
 #计算中国地图掩膜
 def pic(lon,lat)->bool:
@@ -119,4 +124,74 @@ def array2gtiff(array,filename):
         f.write(array,1)
 array2gtiff(array=china_data.astype('float64')[::-1,],
             filename=r"D:\data\dataset\result\test.tiff")
+
+# %% 
+need1 = pd.DataFrame()
+need1['date'] = clean_time_data
+#计算世界和中国月均值
+need1['world_value'] = [np.nanmean(raw_tmp_data[i,:,:]) for i in tqdm(range(raw_tmp_data.shape[0]))]
+need1['china_value'] = [np.nanmean(raw_tmp_data[i,:,:][mask_for_china]) for i in tqdm(range(raw_tmp_data.shape[0]))]
+need1.head()
+# %%
+#画图
+fig,ax = plt.subplots(figsize=(10,4),dpi=150)
+ax.plot(need1['date'],need1['world_value'],label ='世界平均温度' )
+ax.plot(need1['date'],need1['china_value'],label ='中国平均温度' )
+ax.legend()
+
+##需求3、4
+# %%
+#设计求年均函数
+def cal_need34(year,type):
+    out = np.nanmean(raw_tmp_data[clean_time_data.dt.year==year,:,:],axis=0)
+
+    if type == 'world':
+        value = np.nanmean(out)
+    elif type == 'china':
+        value = np.nanmean(out[mask_for_china])
+    else:
+        value = None
+    return value
+#测试
+print(cal_need34(1901,'china'))
+print(cal_need34(1901,'world'))
+# %%
+#设置年np列表
+year = np.arange(start=np.min(clean_time_data.dt.year),stop=np.max(clean_time_data.dt.year))
+year
+need34 = pd.DataFrame({'year':year})
+need34['china_value'] = need34['year'].apply(lambda x:cal_need34(year = x,type='china'))
+need34['world_value'] = need34['year'].apply(lambda x:cal_need34(year = x,type='world'))
+need34
+# %%
+%matplotlib inline
+
+#%%
+#趋势线计算函数
+def smooth_data(y_value, deg=4):
+    x_new = np.arange(y_value.shape[0])
+    new_param = np.polyfit(x_new, y_value, deg=deg)
+    value = np.zeros_like(x_new)
+    for index, param in enumerate(new_param[::-1]):
+        value = value + param * x_new ** index
+    return value
+
+
+need34['smooth_china_value'] = smooth_data(y_value=need34['china_value'])
+need34['smooth_world_value'] = smooth_data(y_value=need34['world_value'])
+# %%
+fig, ax = plt.subplots(figsize=(10, 4), dpi=150)
+ax.plot(need34['year'], need34['world_value'], label='世界平均温度', linestyle='-', marker='o')
+ax.plot(need34['year'], need34['china_value'], label='中国平均温度', linestyle='-', marker='o')
+
+# 增加拟合曲线
+ax.plot(need34['year'], need34['smooth_china_value'], linestyle='--', color='gray')
+ax.plot(need34['year'], need34['smooth_world_value'], linestyle='--', color='gray')
+
+ax.set_title("每年平均气温")
+ax.legend()
+ax.set_xlabel("年份")
+ax.set_ylabel("温度平均数$ ^\circ C $")
+plt.tight_layout()
+fig.savefig(r"D:\data\dataset\result\结果.png")
 # %%
