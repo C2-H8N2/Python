@@ -164,7 +164,7 @@ need34['china_value'] = need34['year'].apply(lambda x:cal_need34(year = x,type='
 need34['world_value'] = need34['year'].apply(lambda x:cal_need34(year = x,type='world'))
 need34
 # %%
-%matplotlib inline
+#%matplotlib
 
 #%%
 #趋势线计算函数
@@ -194,4 +194,92 @@ ax.set_xlabel("年份")
 ax.set_ylabel("温度平均数$ ^\circ C $")
 plt.tight_layout()
 fig.savefig(r"D:\data\dataset\result\结果.png")
+
+# %%
+##需求5 6
+#5全世界每一年的平均气温
+#6中国每年平均气温
+def cal_need56(year,type):
+    out=np.nanmean(raw_tmp_data[clean_time_data.dt.year==year,:,:],axis=0)
+    #在第一个维度（时间维度）上计算平均值，即对同一纬度和经度位置上的不同时间点的数值求平均。
+    if type=='world':
+        value=out
+    elif type=='china':
+        out[~mask_for_china]=np.nan
+        value=out
+    else:
+        value=np.nan
+    return value
+#测试
+out=cal_need56(year=2000,type='china')
+array2gtiff(array=out[::-1,:],filename=r'D:\data\dataset\result\2000ch.tiff')
+
+out=cal_need56(year=2000,type='world')
+array2gtiff(array=out[::-1,:],filename=r'D:\data\dataset\result\2000.tiff')
+# %%
+#需求5和6
+for temp_year in tqdm(range(np.min(clean_time_data.dt.year),np.max(clean_time_data.dt.year)+1)):
+    out=cal_need56(temp_year,type='world')
+    array2gtiff(array=out[::-1,:],filename=f'D:\data\dataset\\result\{temp_year}.tiff')
+
+    out=cal_need56(temp_year,type='china')
+    array2gtiff(array=out[::-1,:],filename=f'D:\data\dataset\\result\{temp_year}ch.tiff')
+# %%
+#需求7 特定时间范围保存tiff
+def cal_need7(start_year,end_year,type):
+    out=np.nanmean(raw_tmp_data[(start_year<=clean_time_data) & (clean_time_data<=end_year),:,:],axis=0)
+    #在第一个维度（时间维度）上计算平均值，即对同一纬度和经度位置上的不同时间点的数值求平均。
+    if type=='world':
+        value=out
+    elif type=='china':
+        out[~mask_for_china]=np.nan
+        value=out
+    else:
+        value=np.nan
+    return value
+#测试
+out=cal_need7(start_year='1902-01',end_year='2020-01',type='china')
+array2gtiff(array=out[::-1,:],filename=r'D:\data\dataset\result\A190201-202001ch.tiff')
+
+out=cal_need7(start_year='1902-01',end_year='2020-01',type='world')
+array2gtiff(array=out[::-1,:],filename=r'D:\data\dataset\result\A190201-202001.tiff')
+
+#需求8特定时间中国数据且用兰伯特投影
+# %%
+out8=cal_need7(start_year='1902-01',end_year='2020-01',type='china')
+#%%
+Lon_data, Lat_data = np.meshgrid(raw_lon_data, raw_lat_data)
+
+need_8_df = pd.DataFrame({'value':out8.flatten(),
+                          'mask_china':mask_for_china.flatten(),
+                          'lon':Lon_data.flatten(),
+                          'lat':Lat_data.flatten()})
+need_8_df = need_8_df.loc[need_8_df['mask_china']]
+#loc 是 Pandas 用于标签索引的方法，专门用于按行的标签或布尔索引进行选择。
+# 使用布尔索引，只保留 mask_china 列为 True 的行。
+need_8_df
+
+# %%
+need_8_df_gd = gpd.GeoDataFrame(
+    need_8_df,
+    geometry=gpd.points_from_xy(x=need_8_df['lon'], y=need_8_df['lat']),
+    crs= raw_crs#china_boundary.crs
+)
+need_8_df_gd = need_8_df_gd.to_crs(new_crs.proj4_init)
+need_8_df_gd
+# %%
+china_boundary_valid_new_crs = china_boundary_valid.to_crs(new_crs.proj4_init)
+china_boundary_valid_new_crs
+# %%
+fig, ax = plt.subplots(figsize=(8, 7), dpi=150, subplot_kw={'projection': new_crs})
+ax.gridlines(draw_labels=True,
+             linewidth=2, color='gray', alpha=0.5, linestyle='--')
+china_boundary_valid_new_crs.boundary.plot(ax=ax, color='black', marker='s')
+need_8_df_gd.plot(ax=ax, column='value', cmap=plt.cm.get_cmap('RdYlBu'), legend=True)
+ax.set_xlabel("longitude")
+ax.set_ylabel("latitude")
+ax.set_title(f"时间范围为: 1902-01 ~ 2020-01")
+plt.tight_layout()
+
+fig.savefig(r"D:\data\dataset\result\中国可视化.png")
 # %%
