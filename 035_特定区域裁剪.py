@@ -94,5 +94,3 @@ def array2tiff(matrix,filename):
                        transform=transform) as f:#指定数据类型为与矩阵相同类型
         f.write(matrix,1)#将矩阵传递给文件,并写入第一个波段中
 array2tiff(china_data[::-1, :],filename=r"D:\data\dataset\result\1901.tiff")
-
-# %%

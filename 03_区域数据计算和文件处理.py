@@ -28,7 +28,7 @@ from cartopy import crs as ccrs
 
 #打印进度条
 from tqdm import tqdm 
-tqdm.pandas()
+tqdm.pandas()#激活 tqdm 的 Pandas 扩展，在调用pandas时显示进度条
 
 #检测系统
 import platform
@@ -40,23 +40,28 @@ elif platform.system() == 'Windows':
     plt.rcParams["font.family"] = 'SimHei'
 else:
     pass
+#----------------------------------------------------------------------
 ##加载数据并提取
 # %%
 #加载数据
 nc_data = nc.Dataset(r"D:\data\dataset\climate data\cru_ts4.05.1901.2020.tmp.dat.nc")
 nc_data
+#----------------------------------------------------------------------
 # %%
 #提取变量
+#variables(dimensions): float32 lon(lon), float32 lat(lat), float32 time(time), float32 tmp(time, lat, lon), int32 stn(time, lat, lon)
+#nc_data的variables属性下各数据
 raw_lat_data = np.array(nc_data.variables['lat'])#纬度
 raw_lon_data = np.array(nc_data.variables['lon'])#经度
 raw_time_data = np.array(nc_data.variables['time'])#时间
 raw_tmp_data = np.array(nc_data.variables['tmp'])#温度
 raw_tmp_data
+#----------------------------------------------------------------------
 #%%
 #提取温度缺失值，并换为nan
-tmp_missing_value = nc_data.variables['tmp'].missing_value
+tmp_missing_value = nc_data.variables['tmp'].missing_value#提取missing——value属性
 raw_tmp_data[raw_tmp_data==tmp_missing_value] = np.nan 
-
+#---------------------------------------------------------------------- 
 ##处理时间
 # %%
 
