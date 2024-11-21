@@ -1,6 +1,11 @@
 #%%
 #导入包
 #本代码为从nc文件中提取某一天数据，再利用json的边界数据，分别统计nc文件中各省的均值，将每个省的均值作为其值出一副图
+#%matplotlib inline 只能在 Jupyter Notebook 或 IPython 中使用。
+# 如果你在命令行的 Python 解释器或一个普通的 .py 文件中运行该命令，
+# 就会遇到 invalid syntax 错误。
+#进入 Jupyter Notebook 或 IPython 环境，然后再执行 %matplotlib inline
+#使用plt.show()代替
 import numpy as np
 import pandas as pd
 import geopandas as gpd

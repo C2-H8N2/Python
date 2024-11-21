@@ -137,24 +137,29 @@ array2gtiff(array=china_data.astype('float64')[::-1,],#将行颠倒
 #----------------------------------------------------------------------
 # %% 
 need1 = pd.DataFrame()
+#创建一个空的 DataFrame 对象，用于存储表格数据。
 need1['date'] = clean_time_data
-#计算世界和中国月均值
+#计算世界和中国月均值，对年数据进行遍历
 need1['world_value'] = [np.nanmean(raw_tmp_data[i,:,:]) for i in tqdm(range(raw_tmp_data.shape[0]))]
 need1['china_value'] = [np.nanmean(raw_tmp_data[i,:,:][mask_for_china]) for i in tqdm(range(raw_tmp_data.shape[0]))]
 need1.head()
+#----------------------------------------------------------------------
 # %%
 #画图
 fig,ax = plt.subplots(figsize=(10,4),dpi=150)
 ax.plot(need1['date'],need1['world_value'],label ='世界平均温度' )
 ax.plot(need1['date'],need1['china_value'],label ='中国平均温度' )
+ax.set_xlabel('年份')
+ax.set_ylabel('摄氏度')
 ax.legend()
-
+plt.show()
+#----------------------------------------------------------------------
 ##需求3、4
 # %%
 #设计求年均函数
 def cal_need34(year,type):
     out = np.nanmean(raw_tmp_data[clean_time_data.dt.year==year,:,:],axis=0)
-
+    #计算年平均数据二维数组
     if type == 'world':
         value = np.nanmean(out)
     elif type == 'china':
@@ -162,30 +167,41 @@ def cal_need34(year,type):
     else:
         value = None
     return value
+
 #测试
 print(cal_need34(1901,'china'))
 print(cal_need34(1901,'world'))
+clean_time_data
+#----------------------------------------------------------------------
 # %%
 #设置年np列表
+#利用clean_time_data.dt.year将数据类型由datetime64转为int
 year = np.arange(start=np.min(clean_time_data.dt.year),stop=np.max(clean_time_data.dt.year))
-year
 need34 = pd.DataFrame({'year':year})
 need34['china_value'] = need34['year'].apply(lambda x:cal_need34(year = x,type='china'))
 need34['world_value'] = need34['year'].apply(lambda x:cal_need34(year = x,type='world'))
+'''
+等效于
+need34['china_value'] = [cal_need34(year = index_year,type='china') for index_year in year]
+need34['world_value'] = [cal_need34(year = index_year,type='world') for index_year in year]
+'''
 need34
+#----------------------------------------------------------------------
 # %%
 #%matplotlib
-
 #%%
 #趋势线计算函数
-def smooth_data(y_value, deg=4):
+def smooth_data(y_value, deg=1):
     x_new = np.arange(y_value.shape[0])
     new_param = np.polyfit(x_new, y_value, deg=deg)
+    #deg线性回归拟合次数，返回值 new_param 是一个包含多项式系数的数组，系数的顺序从高次项到低次项。
+    #eg：x^2+2y+3,返回值[1,2,3]
     value = np.zeros_like(x_new)
+    #创建一个与 x_new 数组相同形状的数组，初始化为全零。这将用于存储最终的多项式值。
     for index, param in enumerate(new_param[::-1]):
+    #enumerate 将返回每个元素的索引和系数值，index 是系数的指数，param 是对应的系数。
         value = value + param * x_new ** index
     return value
-
 
 need34['smooth_china_value'] = smooth_data(y_value=need34['china_value'])
 need34['smooth_world_value'] = smooth_data(y_value=need34['world_value'])
@@ -198,6 +214,7 @@ ax.plot(need34['year'], need34['china_value'], label='中国平均温度', lines
 ax.plot(need34['year'], need34['smooth_china_value'], linestyle='--', color='gray')
 ax.plot(need34['year'], need34['smooth_world_value'], linestyle='--', color='gray')
 
+#增加标题、图例、坐标轴标签
 ax.set_title("每年平均气温")
 ax.legend()
 ax.set_xlabel("年份")
