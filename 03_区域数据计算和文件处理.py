@@ -187,8 +187,6 @@ need34['world_value'] = [cal_need34(year = index_year,type='world') for index_ye
 '''
 need34
 #----------------------------------------------------------------------
-# %%
-#%matplotlib
 #%%
 #趋势线计算函数
 def smooth_data(y_value, deg=1):
@@ -221,7 +219,7 @@ ax.set_xlabel("年份")
 ax.set_ylabel("温度平均数$ ^\circ C $")
 plt.tight_layout()
 fig.savefig(r"D:\data\dataset\result\结果.png")
-
+#----------------------------------------------------------------------
 # %%
 ##需求5 6
 #5全世界每一年的平均气温
@@ -243,6 +241,7 @@ array2gtiff(array=out[::-1,:],filename=r'D:\data\dataset\result\2000ch.tiff')
 
 out=cal_need56(year=2000,type='world')
 array2gtiff(array=out[::-1,:],filename=r'D:\data\dataset\result\2000.tiff')
+#----------------------------------------------------------------------
 # %%
 #需求5和6
 for temp_year in tqdm(range(np.min(clean_time_data.dt.year),np.max(clean_time_data.dt.year)+1)):
@@ -251,6 +250,7 @@ for temp_year in tqdm(range(np.min(clean_time_data.dt.year),np.max(clean_time_da
 
     out=cal_need56(temp_year,type='china')
     array2gtiff(array=out[::-1,:],filename=f'D:\data\dataset\\result\{temp_year}ch.tiff')
+#----------------------------------------------------------------------
 # %%
 #需求7 特定时间范围保存tiff
 def cal_need7(start_year,end_year,type):
@@ -264,36 +264,43 @@ def cal_need7(start_year,end_year,type):
     else:
         value=np.nan
     return value
+#----------------------------------------------------------------------
 #测试
 out=cal_need7(start_year='1902-01',end_year='2020-01',type='china')
 array2gtiff(array=out[::-1,:],filename=r'D:\data\dataset\result\A190201-202001ch.tiff')
 
 out=cal_need7(start_year='1902-01',end_year='2020-01',type='world')
 array2gtiff(array=out[::-1,:],filename=r'D:\data\dataset\result\A190201-202001.tiff')
-
+#----------------------------------------------------------------------
 #需求8特定时间中国数据且用兰伯特投影
 # %%
 out8=cal_need7(start_year='1902-01',end_year='2020-01',type='china')
+#----------------------------------------------------------------------
 #%%
 Lon_data, Lat_data = np.meshgrid(raw_lon_data, raw_lat_data)
-
+#生成一个二维网格,Lon_data 和 Lat_data 是二维数组，分别表示网格中每个点的经度和纬度坐标
+#%%
 need_8_df = pd.DataFrame({'value':out8.flatten(),
                           'mask_china':mask_for_china.flatten(),
                           'lon':Lon_data.flatten(),
                           'lat':Lat_data.flatten()})
 need_8_df = need_8_df.loc[need_8_df['mask_china']]
+#.flatten()将二维数组展开成一维数组。
 #loc 是 Pandas 用于标签索引的方法，专门用于按行的标签或布尔索引进行选择。
 # 使用布尔索引，只保留 mask_china 列为 True 的行。
 need_8_df
-
+#----------------------------------------------------------------------
 # %%
 need_8_df_gd = gpd.GeoDataFrame(
     need_8_df,
     geometry=gpd.points_from_xy(x=need_8_df['lon'], y=need_8_df['lat']),
+    #将每一行的 lon（经度）和 lat（纬度）值转化为点对象
     crs= raw_crs#china_boundary.crs
 )
 need_8_df_gd = need_8_df_gd.to_crs(new_crs.proj4_init)
+#new_crs.proj4_init表示新投影信息的 Proj4 格式字符串
 need_8_df_gd
+#----------------------------------------------------------------------
 # %%
 china_boundary_valid_new_crs = china_boundary_valid.to_crs(new_crs.proj4_init)
 china_boundary_valid_new_crs
