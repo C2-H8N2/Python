@@ -1,37 +1,22 @@
-#%%
 import numpy as np
-import matplotlib.pyplot as plt
+from scipy.interpolate import RegularGridInterpolator
 
-# 假设 y_value 是已经给定的 y 值数据
-y_value = np.array([1, 4, 9, 16, 25, 36])
+# 假设原始数据
+raw_longitude = np.linspace(100, 110, 611)  # 长度为 611
+raw_latitude = np.linspace(20, 30, 221)    # 长度为 221
+raw_tp = np.random.random((1, 221, 611))   # 数据形状为 (1, 221, 611)
 
-# 创建对应的 x_new 数据，假设这里是 0 到 5 的索引
-x_new = np.arange(y_value.shape[0])
+# 检查数据形状是否匹配
+assert raw_tp.shape[1:] == (len(raw_latitude), len(raw_longitude)), "维度不匹配"
 
-# 拟合的多项式阶数
-deg = 1
+# 创建插值函数
+f = RegularGridInterpolator((raw_latitude, raw_longitude), raw_tp[0, :, :])
 
-# 使用 np.polyfit 进行多项式拟合，得到系数
-new_param = np.polyfit(x_new, y_value, deg=deg)
-print(new_param)
-#%%
-# 初始化一个全零的数组来存储拟合值
-value = np.zeros_like(x_new)
-value
-#%%
-# 通过系数和指数计算多项式值
-for index, param in enumerate(new_param[::-1]):
-    print('{} {}'.format(index,param))
-    value = value + param * x_new ** index
-value
-#%%
-# 打印计算的多项式值
-print("拟合值：", value)
+# 目标点
+target_lon = 105
+target_lat = 25
+target_points = np.array([[target_lat, target_lon]])
 
-# 绘制原始数据和拟合曲线
-plt.plot(x_new, y_value, 'bo', label='Original Data')
-plt.plot(x_new, value, 'r-', label='Fitted Polynomial')
-plt.legend()
-plt.show()
-
-# %%
+# 插值
+new_value = f(target_points)
+print(f"在经度 {target_lon}, 纬度 {target_lat} 的插值值为: {new_value}")
