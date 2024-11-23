@@ -208,11 +208,10 @@ for i in tqdm(range(raw_time.shape[0])):
     target_value.append(temp_value)
 
 target_value = np.array(target_value)
-target_value.shape
 
 
 #%%保存为nc文件
-with nc.Dataset(r"D:\data\dataset\result\new_test1115.nc", mode='w', format='NETCDF4_CLASSIC') as ncfile:
+with nc.Dataset(r"D:\data\dataset\result\test1115.nc", mode='w', format='NETCDF4_CLASSIC') as ncfile:
     # 创建维度
     lat_dim = ncfile.createDimension('lat', 360)  # latitude axis
     lon_dim = ncfile.createDimension('lon', 720)  # longitude axis
@@ -243,12 +242,8 @@ with nc.Dataset(r"D:\data\dataset\result\new_test1115.nc", mode='w', format='NET
 
 #*********************************************************************
 # %% 测试
-import xarray as xr
 
-test_xr = xr.open_dataset(r"D:\data\dataset\result\new_test1115.nc")
-test_xr
-# %%
-test_nc = nc.Dataset(r"D:\data\dataset\result\new_test1115.nc")
+test_nc = nc.Dataset(r"D:\data\dataset\result\test1115.nc")
 for item in nc_1988tp.variables.values():
     print('*' * 70)
     print(item)
@@ -260,7 +255,7 @@ nc_mask = GetMask(geopandas=shp_data, nc_data=test_nc, nc_variable='temp', lat_v
 
 nc_mask.run()
 
-# %%
+# %% 返回被地理区域掩膜裁剪后的数据
 clip_test = nc_mask.getclipdata()
 
 #*********************************************************************
@@ -292,7 +287,7 @@ fig.colorbar(im, orientation='vertical')
 #*********************************************************************
 # %% 保存数据
 
-with nc.Dataset(r"D:\data\dataset\result\1new_test1115.nc", mode='w', format='NETCDF4_CLASSIC') as ncfile:
+with nc.Dataset(r"D:\data\dataset\result\new_test1115.nc", mode='w', format='NETCDF4_CLASSIC') as ncfile:
     # 创建维度
     lat_dim = ncfile.createDimension('lat', 360)  # latitude axis
     lon_dim = ncfile.createDimension('lon', 720)  # longitude axis
