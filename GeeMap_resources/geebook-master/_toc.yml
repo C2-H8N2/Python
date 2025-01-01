@@ -1,0 +1,27 @@
+format: jb-book
+root: index
+parts:
+  - caption: Introduction & Overview
+    chapters:
+      - file: chapters/author
+      - file: chapters/preface
+      - file: chapters/toc
+  - caption: Chapters
+    numbered: true
+    maxdepth: 2
+    chapters:
+      - file: chapters/01_introduction
+      - file: chapters/02_maps
+      - file: chapters/03_gee_data
+      - file: chapters/04_local_data
+      - file: chapters/05_data_viz
+      - file: chapters/06_data_analysis
+      - file: chapters/07_data_export
+      - file: chapters/08_cartoee
+      - file: chapters/09_timelapse
+      - file: chapters/10_webapps
+      - file: chapters/11_applications
+  - caption: Appendices
+    chapters:
+      - file: chapters/bibliography
+      - file: chapters/issues
