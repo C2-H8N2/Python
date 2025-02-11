@@ -6,8 +6,48 @@
   <component name="ChangeListManager">
     <list default="true" id="6fbb3606-ebf0-447e-a5e0-74f37e04960c" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/PySEBS-master/PySEBS.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/PySEBS-master/README" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/gee/00_test.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/gee/01_introduction.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/gee/02_maps.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/gee/03_gee_data.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/gee/04_local_data.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/gee/05_data_viz.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/gee/06_data_analysis.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/gee/07_data_export.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/gee/08_cartoee.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/gee/09_timelapse.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/gee/10_webapps.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/gee/11_applications.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/gee/Python.code-workspace" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/python_gis/01_提取nc文件.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/python_gis/02_从nc和json边界作图.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/python_gis/031_nc切片保存为tiff.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/python_gis/032_高维度数据求均值.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/python_gis/033_坐标系转换.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/python_gis/034_时间切片提取数据.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/python_gis/035_特定区域裁剪.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/python_gis/03_区域数据计算和文件处理.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/python_gis/04_数据处理计算.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/python_gis/0_test.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/gee/00_test.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/gee/00_test.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gee/01_introduction.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/gee/01_introduction.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gee/02_maps.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/gee/02_maps.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gee/03_gee_data.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/gee/03_gee_data.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gee/04_local_data.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/gee/04_local_data.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gee/05_data_viz.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/gee/05_data_viz.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gee/06_data_analysis.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/gee/06_data_analysis.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gee/07_data_export.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/gee/07_data_export.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gee/08_cartoee.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/gee/08_cartoee.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gee/09_timelapse.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/gee/09_timelapse.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gee/10_webapps.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/gee/10_webapps.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gee/11_applications.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/gee/11_applications.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gee/Python.code-workspace" beforeDir="false" afterPath="$PROJECT_DIR$/gee/Python.code-workspace" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gee/cache/461ac14500db314f1655f9539ed600906dcbe1da.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gee/cache/50a2b90b83c8f602aeaf986cf9827b607d967382.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/python_gis/0_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/python_gis/0_test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +69,10 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/04_数据处理计算.py" root0="SKIP_INSPECTION" />
+    <setting file="notebook://D:/Python_code/gee/03_gee_data.ipynb" root0="FORCE_HIGHLIGHTING" root1="SKIP_INSPECTION" root2="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
@@ -50,7 +93,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Python代码/Python&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Python_code&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -82,6 +125,16 @@
       <workItem from="1734434516058" duration="431000" />
       <workItem from="1734434968504" duration="71000" />
       <workItem from="1734494979065" duration="408000" />
+      <workItem from="1735725991637" duration="342000" />
+      <workItem from="1735728108296" duration="301000" />
+      <workItem from="1735729534859" duration="324000" />
+      <workItem from="1735730663921" duration="430000" />
+      <workItem from="1735731101584" duration="119000" />
+      <workItem from="1735731226645" duration="4000" />
+      <workItem from="1735734872847" duration="432000" />
+      <workItem from="1735735632042" duration="165000" />
+      <workItem from="1735737722466" duration="257000" />
+      <workItem from="1735787796137" duration="2645000" />
     </task>
     <servers />
   </component>
@@ -90,6 +143,13 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="jupyter-line">
+          <url>notebook://D:/Python_code/gee/06_data_analysis.ipynb</url>
+          <line>30</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
